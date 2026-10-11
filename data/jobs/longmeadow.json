@@ -1,0 +1,6 @@
+[
+  {"title": "SAMPLE: Registered Nurse", "company": "Sample Employer", "location": "Springfield, MA", "lat": 42.1015, "lon": -72.5898, "miles": 5.6, "url": "#", "posted": "2026-10-08", "summary": "Placeholder listing so you can see the layout. Run scraper/scrape.py with API keys to replace with real jobs.", "source": "sample"},
+  {"title": "SAMPLE: Software Engineer", "company": "Sample Employer", "location": "Hartford, CT", "lat": 41.7658, "lon": -72.6734, "miles": 27.0, "url": "#", "posted": "2026-10-07", "summary": "Placeholder listing.", "source": "sample"},
+  {"title": "SAMPLE: Elementary Teacher", "company": "Sample Employer", "location": "Northampton, MA", "lat": 42.3251, "lon": -72.6412, "miles": 20.3, "url": "#", "posted": "2026-10-05", "summary": "Placeholder listing.", "source": "sample"},
+  {"title": "SAMPLE: Accountant", "company": "Sample Employer", "location": "Longmeadow, MA", "lat": 42.0504, "lon": -72.5829, "miles": 0.0, "url": "#", "posted": "2026-10-02", "summary": "Placeholder listing.", "source": "sample"}
+]

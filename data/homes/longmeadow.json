@@ -1,0 +1,5 @@
+[
+  {"address": "SAMPLE: 12 Example St, Longmeadow, MA", "price": 449000, "beds": 4, "baths": 2.5, "sqft": 2100, "type": "Single Family", "listed": "2026-10-06", "nearest_synagogue": "Congregation B'nai Torah", "miles": 0.6, "url": "", "source": "sample"},
+  {"address": "SAMPLE: 34 Sample Ave, Springfield, MA", "price": 329000, "beds": 3, "baths": 2, "sqft": 1650, "type": "Single Family", "listed": "2026-10-03", "nearest_synagogue": "Sinai Temple", "miles": 1.2, "url": "", "source": "sample"},
+  {"address": "SAMPLE: 8 Placeholder Rd, Longmeadow, MA", "price": 389000, "beds": 3, "baths": 1.5, "sqft": 1800, "type": "Single Family", "listed": "2026-09-29", "nearest_synagogue": "Congregation B'nai Torah", "miles": 1.8, "url": "", "source": "sample"}
+]

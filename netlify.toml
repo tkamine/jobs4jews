@@ -1,0 +1,6 @@
+[build]
+  command = "npm ci && python3 build.py"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"

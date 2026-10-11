@@ -1,0 +1,17 @@
+{
+  "name": "jobs-for-jews",
+  "version": "1.0.0",
+  "description": "Job board for small Jewish communities with day schools. Each community page shows jobs within 50 miles next to local schools, synagogues and organizations. Testbed: Longmeadow, MA.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "d3-geo": "^3.1.1",
+    "topojson-client": "^3.1.0",
+    "us-atlas": "^3.0.1"
+  }
+}

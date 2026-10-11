@@ -1,0 +1,60 @@
+{
+  "slug": "longmeadow",
+  "name": "Longmeadow, MA",
+  "region": "Greater Springfield / Pioneer Valley, Massachusetts",
+  "lat": 42.0504,
+  "lon": -72.5829,
+  "map_label": "Springfield / Longmeadow, MA",
+  "radius_miles": 50,
+  "home_radius_miles": 2,
+  "jewish_population": {"value": 12000, "label": "Greater Springfield Jewish community (approx.)", "source": "Lubavitch of Greater Springfield, Oct 2025"},
+  "tagline": "A close-knit Jewish community in the Pioneer Valley, a couple of hours from Boston, Hartford and New York.",
+  "about": "Springfield/Longmeadow offers affordable residential neighborhoods and small-city amenities, with an active JCC, a Modern Orthodox synagogue, Chabad, youth groups and a strong STEM reputation. Area Jewish day schools offer tuition support to community families.",
+  "schools": [
+    {
+      "name": "Heritage Academy",
+      "grades": "K-8",
+      "address": "594 Converse St, Longmeadow, MA 01106",
+      "website": "https://www.heritageacademy.org",
+      "note": "Community day school open to families across the spectrum of observance; secular and Judaic studies."
+    },
+    {
+      "name": "Lubavitcher Yeshiva Academy",
+      "grades": "PS/PK-8",
+      "address": "1148 Converse St, Longmeadow, MA 01106",
+      "website": "",
+      "note": "Chabad-Lubavitch day school; NEASC-accredited. Part of Lubavitch of Greater Springfield, which also runs a preschool and Hebrew school."
+    }
+  ],
+  "synagogues": [
+    {
+      "name": "Congregation B'nai Torah",
+      "movement": "Modern Orthodox",
+      "address": "2 Eunice Dr, Longmeadow, MA",
+      "website": ""
+    },
+    {
+      "name": "Lubavitch of Greater Springfield (Chabad)",
+      "movement": "Chabad",
+      "address": "Springfield / Longmeadow, MA",
+      "website": "https://www.lubavitch.com"
+    },
+    {
+      "name": "Temple Beth El",
+      "movement": "To verify",
+      "address": "Dickinson St, Springfield, MA",
+      "website": ""
+    },
+    {
+      "name": "Sinai Temple",
+      "movement": "Reform",
+      "address": "1100 Dickinson St, Springfield, MA",
+      "website": ""
+    }
+  ],
+  "organizations": [
+    {"name": "Springfield Jewish Community Center", "address": "Longmeadow, MA", "website": ""},
+    {"name": "Jewish Federation of Western Massachusetts", "address": "", "website": ""}
+  ],
+  "todo_verify": "Day school list, movements, and websites should be confirmed with community contacts before launch. Other area schools (e.g., a high school) were mentioned in sources but not confirmed, so they are not listed yet."
+}
