@@ -1,0 +1,33 @@
+name: Refresh jobs and homes
+on:
+  schedule:
+    - cron: "17 9 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Fetch jobs
+        env:
+          ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}
+          ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
+        run: python3 scraper/scrape.py
+      - name: Fetch homes
+        env:
+          RENTCAST_API_KEY: ${{ secrets.RENTCAST_API_KEY }}
+        run: python3 scraper/homes.py
+      - name: Commit updated data
+        run: |
+          git config user.name "data-refresh-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/jobs data/homes
+          git diff --cached --quiet || git commit -m "Refresh jobs and homes data"
+          git push
