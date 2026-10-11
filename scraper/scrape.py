@@ -8,7 +8,7 @@ registering it in SOURCES.
 
 Job dict: title, company, location, lat, lon, url, posted, source, summary
 """
-import json, math, os, sys, urllib.parse, urllib.request
+import json, math, os, sys, urllib.error, urllib.parse, urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -24,7 +24,8 @@ def haversine(lat1, lon1, lat2, lon2):
 
 
 def adzuna(community, pages=3):
-    app_id, app_key = os.environ.get("ADZUNA_APP_ID"), os.environ.get("ADZUNA_APP_KEY")
+    app_id = (os.environ.get("ADZUNA_APP_ID") or "").strip()
+    app_key = (os.environ.get("ADZUNA_APP_KEY") or "").strip()
     if not (app_id and app_key):
         print("  adzuna: no ADZUNA_APP_ID/ADZUNA_APP_KEY set, skipping", file=sys.stderr)
         return None
@@ -36,8 +37,16 @@ def adzuna(community, pages=3):
             "sort_by": "date",
         })
         url = f"https://api.adzuna.com/v1/api/jobs/us/search/{page}?{q}"
-        with urllib.request.urlopen(url, timeout=30) as r:
-            data = json.load(r)
+        try:
+            with urllib.request.urlopen(url, timeout=30) as r:
+                data = json.load(r)
+        except urllib.error.HTTPError as ex:
+            body = ex.read().decode("utf-8", "replace")[:300]
+            print(f"  Adzuna error {ex.code}: {body}", file=sys.stderr)
+            return None  # treated as "skipped": existing data is kept
+        except urllib.error.URLError as ex:
+            print(f"  Adzuna network error: {ex}", file=sys.stderr)
+            return None
         for j in data.get("results", []):
             out.append({
                 "title": j.get("title", "").strip(),
