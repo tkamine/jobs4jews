@@ -12,7 +12,7 @@ Why not Zillow: Zillow has no public listings API for this use and its terms pro
 scraping, so we use RentCast (set RENTCAST_API_KEY; free tier available). Swap in another
 provider by editing fetch_listings().
 """
-import json, math, os, sys, urllib.parse, urllib.request
+import json, math, os, sys, urllib.error, urllib.parse, urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -43,7 +43,7 @@ def geocode(address, cache):
 
 
 def fetch_listings(lat, lon, radius):
-    key = os.environ.get("RENTCAST_API_KEY")
+    key = (os.environ.get("RENTCAST_API_KEY") or "").strip()
     if not key:
         print("  no RENTCAST_API_KEY set, skipping", file=sys.stderr)
         return None
@@ -51,8 +51,17 @@ def fetch_listings(lat, lon, radius):
                                 "status": "Active", "limit": 500})
     req = urllib.request.Request(f"https://api.rentcast.io/v1/listings/sale?{q}",
                                  headers={"X-Api-Key": key, "Accept": "application/json"})
-    with urllib.request.urlopen(req, timeout=30) as r:
-        return json.load(r)
+    try:
+        with urllib.request.urlopen(req, timeout=30) as r:
+            return json.load(r)
+    except urllib.error.HTTPError as ex:
+        body = ex.read().decode("utf-8", "replace")[:300]
+        hint = " (key rejected: check the RENTCAST_API_KEY secret)" if ex.code in (401, 403) else ""
+        print(f"  RentCast error {ex.code}{hint}: {body}", file=sys.stderr)
+        return None  # treated as "skipped": existing data is kept
+    except urllib.error.URLError as ex:
+        print(f"  RentCast network error: {ex}", file=sys.stderr)
+        return None
 
 
 def main():
