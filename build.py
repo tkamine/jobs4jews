@@ -64,7 +64,7 @@ def homes_html(c, homes):
 def page(c, jobs, homes):
     pop = c.get("jewish_population")
     stats = "".join([
-        stat(len(c["schools"]), "Jewish day schools"),
+        stat(len(c["schools"]), "Jewish day school" + ("" if len(c["schools"]) == 1 else "s")),
         stat(len(c["synagogues"]), "Synagogues", "list may be incomplete"),
         stat(len(c["organizations"]), "Community organizations"),
         stat(f"~{pop['value']:,}", "Jewish residents", pop["source"]) if pop else "",
@@ -90,7 +90,7 @@ def page(c, jobs, homes):
 <div class="stats">{stats}</div>
 <main>
 <aside><section class="card"><h2>About the community</h2><p>{e(c['about'])}</p>
-<h3>Jewish day schools</h3><ul>{schools}</ul>
+<h3>Jewish day school{"" if len(c["schools"]) == 1 else "s"}</h3><ul>{schools}</ul>
 <h3>Synagogues</h3><ul>{shuls}</ul>
 <h3>Community organizations</h3><ul>{orgs}</ul>
 <p class="note">{e(c.get('todo_verify',''))}</p></section></aside>

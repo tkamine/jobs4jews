@@ -46,7 +46,7 @@ def fetch_listings(lat, lon, radius):
     key = os.environ.get("RENTCAST_API_KEY")
     if not key:
         print("  no RENTCAST_API_KEY set, skipping", file=sys.stderr)
-        return []
+        return None
     q = urllib.parse.urlencode({"latitude": lat, "longitude": lon, "radius": radius,
                                 "status": "Active", "limit": 500})
     req = urllib.request.Request(f"https://api.rentcast.io/v1/listings/sale?{q}",
@@ -68,9 +68,17 @@ def main():
                 shuls.append(s)
             else:
                 print(f"  skipping {s['name']}: address not geocodable ({s['address']!r})")
+        if not shuls:
+            print(f"{c['name']}: no geocodable synagogues, keeping existing data/homes file")
+            continue
         homes = {}
+        skipped = False
         for s in shuls:
-            for h in fetch_listings(s["lat"], s["lon"], radius):
+            listings = fetch_listings(s["lat"], s["lon"], radius)
+            if listings is None:
+                skipped = True
+                break
+            for h in listings:
                 if h.get("latitude") is None:
                     continue
                 best = min(shuls, key=lambda x: haversine(h["latitude"], h["longitude"], x["lat"], x["lon"]))
@@ -84,6 +92,9 @@ def main():
                     "nearest_synagogue": best["name"], "miles": round(d, 2),
                     "url": h.get("listingUrl", ""), "source": "RentCast",
                 }
+        if skipped:
+            print(f"{c['name']}: no key, keeping existing data/homes file")
+            continue
         out = sorted(homes.values(), key=lambda h: h["miles"])
         (ROOT / "data" / "homes").mkdir(parents=True, exist_ok=True)
         (ROOT / "data" / "homes" / f"{c['slug']}.json").write_text(json.dumps(out, indent=2))

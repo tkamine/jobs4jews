@@ -26,3 +26,11 @@ python3 build.py
 - Starts with Adzuna's API rather than scraping Indeed/LinkedIn HTML, which their terms prohibit and which block bots.
   Other sources (state job banks, USAJOBS, Jewish job boards, school sites) can be added to `SOURCES`.
 - Community info needs verification with local contacts before launch.
+
+## Getting real jobs and homes (scheduled refresh)
+1. Get free keys: Adzuna (developer.adzuna.com, gives App ID + App Key) and RentCast (rentcast.io, API key).
+2. In your GitHub repo: Settings > Secrets and variables > Actions > New repository secret. Add
+   `ADZUNA_APP_ID`, `ADZUNA_APP_KEY`, `RENTCAST_API_KEY`.
+3. Actions tab > "Refresh jobs and homes" > Run workflow. It also runs daily. It commits the new
+   `data/` files and Netlify rebuilds the site automatically.
+Never put keys in the repo. Without keys the scrapers skip and keep the existing data files.

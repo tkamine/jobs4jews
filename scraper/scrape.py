@@ -27,7 +27,7 @@ def adzuna(community, pages=3):
     app_id, app_key = os.environ.get("ADZUNA_APP_ID"), os.environ.get("ADZUNA_APP_KEY")
     if not (app_id and app_key):
         print("  adzuna: no ADZUNA_APP_ID/ADZUNA_APP_KEY set, skipping", file=sys.stderr)
-        return []
+        return None
     out = []
     for page in range(1, pages + 1):
         q = urllib.parse.urlencode({
@@ -60,8 +60,13 @@ def main():
         c = json.loads(path.read_text())
         print(f"{c['name']}:")
         jobs, seen = [], set()
+        ran = False
         for src in SOURCES:
-            for j in src(c):
+            results = src(c)
+            if results is None:  # source skipped (e.g. no API key)
+                continue
+            ran = True
+            for j in results:
                 key = (j["title"].lower(), j["company"].lower(), j["location"].lower())
                 if key in seen:
                     continue
@@ -71,6 +76,9 @@ def main():
                     if j["miles"] > c["radius_miles"]:
                         continue
                 jobs.append(j)
+        if not ran:
+            print("  no sources ran; keeping existing data/jobs file")
+            continue
         jobs.sort(key=lambda j: j.get("posted", ""), reverse=True)
         outdir = ROOT / "data" / "jobs"
         outdir.mkdir(parents=True, exist_ok=True)
